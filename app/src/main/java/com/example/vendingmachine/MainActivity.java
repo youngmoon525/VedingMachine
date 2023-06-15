@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,18 +24,14 @@ public class MainActivity extends AppCompatActivity {
             "김건호",
             "김기곤",
             "김수봉",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-    }
+            "김혜민",
+            "문병준",
+            "송빛나",
+            "이진성",
+            "임유주",
+            "정수원",
+            "조은평"
+    };
     int[] imgIdArr= {
             R.drawable.img1,
             R.drawable.img2,
@@ -55,13 +52,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ln_layout = findViewById(R.id.ln_layout);
-        linearList.add(createLinearHorizon());
+        linearList.add(createLinear(LinearLayout.HORIZONTAL));
         for (int i = 1; i <= imgIdArr.length; i++) {
+            LinearLayout ln_vertical = createLinear(LinearLayout.VERTICAL , 1);
             ImageView imgv = createImageView(imgIdArr[i-1]);
+            TextView tv_name = createTextView(nameArr[i-1]);
+            ln_vertical.addView(imgv);
+            ln_vertical.addView(tv_name);
             imgList.add(imgv);
-            linearList.get(linearList.size()-1).addView(imgv);
+            linearList.get(linearList.size()-1).addView(ln_vertical);
             if(i%4 == 0){
-                linearList.add(createLinearHorizon());
+                linearList.add(createLinear(LinearLayout.HORIZONTAL));
             }
         }
         for (int i = 0; i < linearList.size(); i++) {
@@ -73,6 +74,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    TextView createTextView(String text){
+        TextView view = new TextView(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT);
+        view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        view.setLayoutParams(params);
+        doBounceAnimation(view);
+        view.setText(text);
+        return view;
+    }
+
+
     ImageView createImageView(int imgId){
         ImageView view = new ImageView(this);
         view.setImageResource(imgId);
@@ -80,16 +93,35 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200 , 200);
         view.setLayoutParams(params);
         doBounceAnimation(view);
-        view.setColorFilter(Color.parseColor("#55ff0000"));
-        view.setColorFilter(null);
+
+        view.setOnClickListener(v->{
+            if(view.getTag() != null ){
+                view.setTag(null);
+                view.setColorFilter(null);
+            }else{
+                view.setColorFilter(Color.parseColor("#55ff0000"));
+                view.setTag("ON");
+            }
+
+        });
+
+        //view.setColorFilter(null);
         return view;
     }
-
-    LinearLayout createLinearHorizon(){
+    LinearLayout createLinear(int orientation , int weight){
+        LinearLayout linearLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,weight);
+        linearLayout.setLayoutParams(params);
+        linearLayout.setOrientation(orientation);
+        linearLayout.setGravity(Gravity.CENTER);
+        return linearLayout;
+    }
+    LinearLayout createLinear(int orientation){
         LinearLayout linearLayout = new LinearLayout(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         linearLayout.setLayoutParams(params);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayout.setOrientation(orientation);
+        linearLayout.setGravity(Gravity.CENTER);
         return linearLayout;
     }
     private void doBounceAnimation(View targetView) {
@@ -97,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         animator.setStartDelay(500);
         animator.setDuration(1500);
         animator.setRepeatCount(ValueAnimator.INFINITE);
-
         animator.start();
     }
 }
