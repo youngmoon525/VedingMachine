@@ -6,14 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:orientation="vertical"
     android:background="#FFF"
     >
 
+
+
     <LinearLayout
+        android:layout_weight="1"
         android:orientation="vertical"
         android:id="@+id/ln_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"/>
+
+    <Button
+        android:layout_gravity="center"
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="다음판ㄱ"
+        />
 
 
 
