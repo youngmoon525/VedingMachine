@@ -35,13 +35,10 @@ public class CreateUi {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         view.setLayoutParams(params);
-        // doBounceAnimation(view);
         view.setText(text);
         return view;
     }
 
-    //
-//
     ImageView createImageView(int imgId, int gravity) {
         ImageView view = new ImageView(context);
         view.setImageResource(imgId);
@@ -60,14 +57,7 @@ public class CreateUi {
     }
 
 
-    Button createButton(String text , View.OnClickListener onClickListener) {
-        Button view = new Button(context);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        view.setLayoutParams(params);
-        view.setText(text);
-        view.setOnClickListener(onClickListener);
-        return view;
-    }
+
     Button createButton(String text) {
         Button view = new Button(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -93,6 +83,20 @@ public class CreateUi {
         return progress;
     }
 //
+
+    FrameLayout createBack() {
+        FrameLayout linearLayout = new FrameLayout(context);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(350, 600);
+        linearLayout.setLayoutParams(params);
+        return linearLayout;
+    }
+
+    FrameLayout createLine( int weight) {
+        FrameLayout linearLayout = new FrameLayout(context);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100, weight);
+        linearLayout.setLayoutParams(params);
+        return linearLayout;
+    }
     LinearLayout createLinear(int orientation, int weight) {
         LinearLayout linearLayout = new LinearLayout(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, weight);
@@ -118,8 +122,11 @@ public class CreateUi {
     }
 
     AlertDialog getInstenceDialogBuilder(LinearLayout ln , ArrayList<Player> players , MainActivity.AnimatorAction action) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         FrameLayout frameLayout = createFrame();
+        frameLayout.setPadding(5,5,5,5);
+        frameLayout.addView(createBack());
         frameLayout.addView(ln);
         Animator animator = new Animator();
         animator.doAnimationX(players , action);

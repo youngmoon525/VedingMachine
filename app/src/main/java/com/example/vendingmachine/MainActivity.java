@@ -15,6 +15,7 @@ import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     ));
                     currPlayer.get(currPlayer.size()-1).setFlag(i);
                     ln_vertical.addView(currPlayer.get(currPlayer.size()-1).getImgv());
-                    ln_vertical.addView(currPlayer.get(currPlayer.size()-1).getTextView());
+
                     ln_vertical.addView(currPlayer.get(currPlayer.size()-1).getProgressBar());
 
                     linearHorizon.addView(ln_vertical);
@@ -94,8 +95,9 @@ public class MainActivity extends AppCompatActivity {
             }
             Button button = ui.createButton("다음판");
             button.setVisibility(View.VISIBLE);
-            layoutVertical.addView(ui.createTextView("싸움"));
+            layoutVertical.addView(ui.createTextView(currPlayer.get(0).getTextView().getText().toString()+ " VS "+currPlayer.get(1).getTextView().getText().toString()));
             layoutVertical.addView(linearHorizon);
+            layoutVertical.addView(ui.createLine(1) );
             layoutVertical.addView(button);
 
            AlertDialog dialog =   ui.getInstenceDialogBuilder(layoutVertical,currPlayer , new AnimatorAction(currPlayer));;
@@ -112,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
                    Toast.makeText(this, "진행중", Toast.LENGTH_SHORT).show();
                }
            });
-
+           Window window = dialog.getWindow();
+           window.setGravity(Gravity.BOTTOM);
            dialog.show();
 
 
